@@ -399,6 +399,11 @@ Da ora in poi ci riferiamo al **progetto** su cui lavoriamo con il termine di **
 
 ---
 
+## Working areas
+
+<img class="w-75" src="imgs/git-working-areas.png"/>
+
+---
 
 Qualora, durante lo sviluppo di un progetto volessi salvarne lo stato, dovrei catturarne uno *snapshot*.
 
@@ -422,6 +427,27 @@ Nella tassonomia di Git, ci si riferisce a questa pratica con il termine "**comm
 {{% /col %}}
 
 {{% /multicol %}}
+
+---
+
+## Prima di iniziare
+
+Comunichiamo a git **chi siamo**.
+
+<br>
+
+```bash
+git config --global user.name "Nicholas Magi"
+git config --global user.email "nicholas.magi@ispascalcomandini.it"
+```
+
+<br>
+
+{{% callout %}}
+
+Utilizzando `--global` rendiamo le precedenti informazioni **default** per tutte le repository create sulla nostra macchina.
+
+{{% /callout %}}
 
 ---
 
@@ -501,7 +527,129 @@ gitGraph
    commit id: "Finished!" type: HIGHLIGHT
 ```
 
+Come visualizzo la storia?
+
+{{% multicol %}}
+{{% col %}}
+### #01 
+
+> `git log`
+
+<br>
+
+- Fornisce una descrizione completa dei commit presenti.
+{{% /col %}}
+{{% col %}}
+### #02
+
+> `git log --graph --oneline --all --decorate`
+
+<br>
+
+- Fornisce un grafo con struttura ASCII di tutti i branch e i merge point;
+- Mostra i commit in una singola linea;
+- Mostra tutti i branch locali, remoti e tag;
+- Mostra puntatori di riferimento accanto ai nodi di commit.
+
+{{% /col %}}
+{{% /multicol %}}
+
 {{% /section %}}
+
+---
+
+{{% section %}}
+### Ho fatto un errore: come posso **tornare indietro**?
+
+#### #01: Ho aggiunto allo staging un **nuovo file** (*mai tracciato prima*) che non volevo aggiungere. 
+
+> - Risposta: `git rm --cached <nomefile>`
+
+- Effetto: git segnerà il file come "da tracciare".
+
+---
+
+### Ho fatto un errore: come posso **tornare indietro**?
+
+#### #02: Ho aggiunto allo staging una **modifica di file** (*già tracciato in precedenza*) che non volevo aggiungere. 
+
+> - Risposta: `git restore --staged <nomefile>`
+
+- Effetto: il file torna allo stato "modifiche non caricate per il commit".
+
+---
+
+### Ho fatto un errore: come posso **tornare indietro**?
+
+#### #03: Voglio tornare indietro di un commit **locale** (ad una versione precedente del progetto).
+
+{{% multicol %}}
+{{% col %}}
+gitGraph
+    commit id: "A"
+    commit id: "B"
+    commit id: "C"
+{{% /col %}}
+{{% col %}}
+$\rightarrow$
+{{% /col %}}
+{{% col %}}
+gitGraph
+    commit id: "A"
+    commit id: "B"
+{{% /col %}}
+{{% /multicol %}}
+
+---
+
+### 3 possibilità
+
+{{% multicol %}}
+{{% col %}}
+#### #01: 
+> `git reset --soft HEAD~1`
+
+<br>
+
+- Effetto: 
+  - **working directory**: intatta, 
+  - **staging area**: tutte le modifiche dell'ex commit C pronte per essere ricommittate.
+{{% /col %}}
+{{% col %}}
+#### #02: 
+
+> `git reset --mixed HEAD~1`
+
+<br>
+
+- Effetto: 
+  - **working directory**: segnala le modifiche del commit C come modifiche *unstaged*, 
+  - **staging area**: vuota.
+{{% /col %}}
+{{% col %}}
+#### #03: 
+
+> `git reset --hard HEAD~1`
+
+<br>
+
+- Effetto: 
+  - **working directory**: riportata esattamente allo stato del commit B, 
+  - **staging area**: svuotata.
+
+<br>
+<br>
+
+{{% callout type="danger" title="Effetto distruttivo!" %}}
+Tutto il contenuto del commit C viene cancellato! 
+{{% /callout %}}
+
+{{% /col %}}
+{{% /multicol %}}
+
+
+{{% /section %}}
+
 
 ---
 
