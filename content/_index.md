@@ -432,7 +432,7 @@ Nella tassonomia di Git, ci si riferisce a questa pratica con il termine "**comm
 
 ## Prima di iniziare
 
-Comunichiamo a git **chi siamo**.
+Comunichiamo a git **chi siamo** — I commit verranno registrati sotto l'identità specificata.
 
 <br>
 
@@ -527,7 +527,9 @@ gitGraph
    commit id: "Finished!" type: HIGHLIGHT
 ```
 
-Come visualizzo la storia?
+---
+
+## Come visualizzo lo storico dei commit?
 
 {{% multicol %}}
 {{% col %}}
@@ -585,18 +587,22 @@ Come visualizzo la storia?
 
 {{% multicol %}}
 {{% col %}}
+```mermaid
 gitGraph
     commit id: "A"
     commit id: "B"
     commit id: "C"
+```
 {{% /col %}}
 {{% col %}}
 $\rightarrow$
 {{% /col %}}
 {{% col %}}
+```mermaid
 gitGraph
     commit id: "A"
     commit id: "B"
+```
 {{% /col %}}
 {{% /multicol %}}
 
@@ -754,3 +760,31 @@ class HEAD,HEADL head;
 class master,masterl,bug22,serverless branch;
 class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8,CL9,CL10,CL11,CL12,CL13 commit;
 ```
+
+---
+
+## In generale
+
+```sh
+git remote add <name> <remote-url>
+```
+
+{{% multicol %}}
+{{% col %}}
+### Con SSH (**consigliato**)
+```sh
+git remote add <name> git@<remote-service>:<tuo-username>/<tuo-repo.git>
+```
+
+{{% callout %}}
+Altro comando utile: `ssh-keygen`
+{{% /callout %}}
+
+{{% /col %}}
+{{% col %}}
+### Con HTTPS
+```sh
+git remote add <name> https://<remote-service>/<tuo-username>/<tuo-repo.git>
+```
+{{% /col %}}
+{{% /multicol %}}
